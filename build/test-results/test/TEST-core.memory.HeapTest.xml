@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="core.memory.HeapTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2023-11-04T08:02:46" hostname="Jonahs-MacBook-Pro.local" time="0.292">
+  <properties/>
+  <testcase name="testHeapExceptions()" classname="core.memory.HeapTest" time="0.009"/>
+  <testcase name="testFillHeap()" classname="core.memory.HeapTest" time="0.283"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
