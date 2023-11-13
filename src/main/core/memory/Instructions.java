@@ -8,7 +8,11 @@ public class Instructions {
     private final MemoryBlock[] instructions;
 
     public Instructions() {
-        this.instructions = new MemoryBlock[1_000_000];
+        this(1_000_000);
+    }
+
+    public Instructions(int size) {
+        this.instructions = new MemoryBlock[size];
         this.labelMap = new HashMap<>();
     }
 

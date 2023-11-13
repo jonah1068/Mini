@@ -1,6 +1,7 @@
 plugins {
     id 'jacoco'
     id 'java'
+    id 'antlr'
 }
 
 group 'com.jonahliu'

@@ -1,0 +1,13 @@
+# Gradle
+build
+.gradle
+gradle
+out
+gradlew.*
+gradlew
+
+# IntelliJ
+.idea
+
+# macOS files
+.DS_Store
