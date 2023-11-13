@@ -30,6 +30,8 @@ lexer grammar MiniLexer;
     ANY: 'Any';
     IF : 'if' ;
     RETURN : 'return' ;
+    TYPEDEF : 'typedef' ;
+    FRAME: 'frame' ;
     ADD : '+' ;
     SUB : '-' ;
     MULT : '*' ;
