@@ -1,12 +1,24 @@
 parser grammar MiniParser;
 options { tokenVocab=MiniLexer; }
 
-program
-    : (fnDecl | typedef | frame /* ';' */ | (varDecl ';') | varInit /* ';' */)* EOF
+program: programList EOF ;
+
+programList
+    : programList programStmt
+    | /* nothing */
+    ;
+
+programStmt
+    : fnDecl
+    | typedef ';'
+    | frameDecl ';'
+    | varDecl ';'
+    | varInit
     ;
 
 typedef
     : 'typedef' type ID
+    | 'typedef' frameDecl ID
     ;
 
 fnDecl
@@ -27,17 +39,20 @@ varDecl: type ID;
 varInit: varDecl EQ expr ';';
 
 type
-    : genericType '<' type '>'
-    | nonGenericType
-    | type '[' ']'
-    | frame
+    : primitiveType
+    | genericType
+    | frameType
+    | type '[' ']' // arrayType
     ;
 
-frame
-    : 'frame' ID '{' ( varDecl ';')+ '}' ';'
+genericType: primitiveGenericType '<' type '>' ;
+frameType: 'frame' ID;
+
+frameDecl
+    : frameType '{' ( varDecl ';')+ '}'
     ;
 
-nonGenericType
+primitiveType
     : INTEGER
     | DECIMAL
     | CHARACTER
@@ -45,7 +60,7 @@ nonGenericType
     | ANY
     ;
 
-genericType:
+primitiveGenericType:
     | ARRAYLIST
     | LINKEDLIST
     | POINTER
@@ -55,7 +70,7 @@ stmt
     : IF '(' expr ')' '{' stmt* '}'
     | varDecl ';'
     | varInit // varInit suffixed with ';'
-    | frame // frame suffixed with ';'
+    | frameDecl ';'
     | RETURN ';'
     | RETURN expr ';'
     | expr ';'

@@ -1,0 +1,28 @@
+Integer main(Decimal x, ArrayList<ArrayList<Character>> y) {
+    System.out(a+b*c);
+    Integer j = fib(3 + 4 % 5) * 2;
+
+    Integer i = 3;
+    Pointer<Integer> i_ptr = System.addressOf(i);
+    i_ptr.setValue(4);
+
+    System.out(i); // prints '4'
+    System.out(i_ptr.getValue());
+    ArrayList<Integer>[][] test;
+    Integer[][][] array;
+    a == b || c;
+    frame f { Integer x; Integer y; };
+
+} // test SfdsF Integer
+
+/*
+/
+Integer
+    */ //
+Integer fib(Integer i) {
+    if (i == 0 || i == 1) {
+        return 1;
+    }
+    return fib(i - 1) + fib(i - 2)[2];
+}
+
