@@ -1,4 +1,4 @@
-package language;
+package language.model;
 
 import java.util.List;
 

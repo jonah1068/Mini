@@ -50,5 +50,15 @@ jar {
 }
 
 generateGrammarSource {
-    arguments += ["-visitor"]
+    arguments += ["-no-listener"]
 }
+
+tasks.register('copyParserOutput', Copy) {
+    dependsOn compileJava
+    delete(layout.projectDirectory.dir("src/main/language/antlr"))
+
+    from layout.buildDirectory.dir("generated-src/antlr/main")
+    into layout.projectDirectory.dir("src/main/language/antlr")
+}
+compileJava.finalizedBy copyParserOutput
+build.dependsOn tasks.withType(Copy)

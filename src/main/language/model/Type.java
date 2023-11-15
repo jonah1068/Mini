@@ -1,4 +1,4 @@
-package language;
+package language.model;
 
 public interface Type {
 }
