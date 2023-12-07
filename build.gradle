@@ -51,14 +51,12 @@ jar {
 
 generateGrammarSource {
     arguments += ["-no-listener"]
+    outputDirectory = file("src/main/language/antlr")
 }
 
 tasks.register('copyParserOutput', Copy) {
-    dependsOn compileJava
+    dependsOn generateGrammarSource
     delete(layout.projectDirectory.dir("src/main/language/antlr"))
-
-    from layout.buildDirectory.dir("generated-src/antlr/main")
-    into layout.projectDirectory.dir("src/main/language/antlr")
 }
-compileJava.finalizedBy copyParserOutput
+compileJava.dependsOn copyParserOutput
 build.dependsOn tasks.withType(Copy)

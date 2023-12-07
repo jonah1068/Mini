@@ -1,5 +1,6 @@
 package language.model;
 
+import core.system.CPU;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -13,4 +14,8 @@ public class FunctionDeclaration implements ProgramStatement {
     private List<VariableDeclaration> parameterList;
     private List<Statement> statements;
 
+    @Override
+    public void execute(CPU cpu) {
+        statements.forEach(statement -> statement.execute(cpu));
+    }
 }

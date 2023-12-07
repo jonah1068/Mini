@@ -1,4 +1,4 @@
 package language.model;
 
-public interface ProgramStatement {
+public interface ProgramStatement extends Node {
 }

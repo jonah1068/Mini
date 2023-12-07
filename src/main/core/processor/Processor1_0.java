@@ -1,7 +1,7 @@
 package core.processor;
 
 import core.system.CPU;
-import core.system.SystemFunctions;
+import core.system.SystemFunction;
 
 import java.util.HashMap;
 import java.util.Scanner;
@@ -45,7 +45,7 @@ public class Processor1_0 implements Processor {
                         continue;
                     }
 
-                    cpu.handleSystemFunction(SystemFunctions.OUT, output);
+                    cpu.handleSystemFunction(SystemFunction.OUT, output);
                 } else if (line[0].equals("let")) {
                     if (line.length != 4 || !line[2].equals("=")) {
                         System.out.println("Syntax Error: let VAR_NAME = INT_VALUE");
@@ -57,7 +57,7 @@ public class Processor1_0 implements Processor {
                     }
 
                     offsets.put(line[1], offsetCounter++);
-                    cpu.handleSystemFunction(SystemFunctions.PUSH, Integer.parseInt(line[3]));
+                    cpu.handleSystemFunction(SystemFunction.PUSH, Integer.parseInt(line[3]));
                 } else if (line[1].equals("=")) {
                     if (!offsets.containsKey(line[0])) {
                         System.out.println("Runtime Error: variable " + line[1] + " is not defined.");
@@ -73,12 +73,12 @@ public class Processor1_0 implements Processor {
                         }
                     }
                     for (int i = 1; i >= 0; i--) {
-                        cpu.handleSystemFunction(SystemFunctions.PUSH, vals[i]);
+                        cpu.handleSystemFunction(SystemFunction.PUSH, vals[i]);
                     }
                     switch (line[3]) {
                         case "+":
-                            cpu.handleSystemFunction(SystemFunctions.SET_BASE_PLUS, offsets.get(line[0]),
-                                    cpu.handleSystemFunction(SystemFunctions.ADD, vals[0], vals[1]));
+                            cpu.handleSystemFunction(SystemFunction.SET_BASE_PLUS, offsets.get(line[0]),
+                                    cpu.handleSystemFunction(SystemFunction.ADD, vals[0], vals[1]));
                     }
                 }
             } finally {
@@ -92,7 +92,7 @@ public class Processor1_0 implements Processor {
             return Integer.parseInt(s);
         } catch (NumberFormatException e) {
             if (offsets.containsKey(s)) {
-                return cpu.handleSystemFunction(SystemFunctions.GET_BASE_PLUS, offsets.get(s));
+                return cpu.handleSystemFunction(SystemFunction.GET_BASE_PLUS, offsets.get(s));
             } else {
                 throw new RuntimeException("Runtime Error: variable " + s + " is not defined.");
             }

@@ -1,5 +1,9 @@
 lexer grammar MiniLexer;
 
+@header {
+    package language.antlr;
+}
+
     NOT : '!' ;
     EQ : '=' ;
     NEQ : '!=' ;
@@ -40,9 +44,11 @@ lexer grammar MiniLexer;
     DOT : '.' ;
     QMARK: '?';
     COLON: ':';
+    SYSTEM: 'System.';
 
     INT_LIT : [0-9]+ ;
-    ID: [a-z][a-zA-Z_0-9]* | 'System';
+    STR_LIT: '"' .*? ~'\\' '"';
+    ID: [a-z][a-zA-Z_0-9]*;
     WS: [ \t\n\r\f]+ -> channel(HIDDEN) ;
     BLOCK_COMMENT: '/*' .*? '*/'  -> skip;
     LINE_COMMENT: '//' ~[\r\n]* -> skip;

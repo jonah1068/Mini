@@ -22,9 +22,8 @@ program returns [Program p]
 
 programList returns [ArrayList<ProgramStatement> l]
     : pl=programList ps=programStmt {
-        ArrayList<ProgramStatement> list = $pl.l;
-        list.add($ps.p);
-        $l = list;
+        $pl.l.add($ps.p);
+        $l = $pl.l;
     }
     | /* nothing */ {
         $l = new ArrayList<>();
@@ -56,19 +55,35 @@ typedef
 
 fnDecl returns [FunctionDeclaration f]
     : v=varDecl '(' l=varDeclList ')' '{' s=stmtList '}' {
-        $f = new FunctionDeclaration($v.v, $l.l, $s.s);
+        $f = new FunctionDeclaration($v.v.getType(), $v.v.getId(), $l.l, $s.s);
     };
 
-actualList
-    : actualList ',' expr
-    | expr
-    | /* nothing */
+actualList returns [ArrayList<Expression> l]
+    : a=actualList ',' e=expr {
+        $a.l.add($e.e);
+    }
+    | e=expr {
+        $l = new ArrayList<>();
+        $l.add($e.e);
+    }
+    | { /* nothing */
+        $l = new ArrayList<>();
+    }
     ;
 
 varDeclList returns [ArrayList<VariableDeclaration> l]
-    : varDecl ',' varDeclList
-    | varDecl
-    | /* nothing */
+    : v1=varDecl ',' vl=varDeclList {
+        $l = $vl.l;
+        $l.add($v1.v);
+    }
+    | v2=varDecl {
+        $l = new ArrayList<VariableDeclaration>() {{
+            add($v2.v);
+        }};
+    }
+    | { /* nothing */
+        $l = new ArrayList<VariableDeclaration>();
+    }
     ;
 
 varDecl returns [VariableDeclaration v]
@@ -108,8 +123,17 @@ primitiveGenericType:
     ;
 
 stmtList returns [ArrayList<Statement> s]
-    : stmtList stmt
-    | /* nothing */
+    : sl=stmtList st1=stmt {
+        $s = $sl.s;
+        $s.add($st1.s);
+    }
+    | st2=stmt {
+        $s = new ArrayList<Statement>();
+        $s.add($st2.s);
+    }
+    | { /* nothing */
+        $s = new ArrayList<Statement>();
+    }
     ;
 
 stmt returns [Statement s]
@@ -126,7 +150,9 @@ stmt returns [Statement s]
     | frameDecl ';'
     | RETURN ';'
     | RETURN expr ';'
-    | expr ';'
+    | e=expr ';' {
+        $s = new ExpressionStatement($e.e);
+    }
     ;
 
 assignStmt
@@ -137,7 +163,6 @@ expr returns [Expression e]
     : '(' expr ')'
     | expr '[' expr ']'
     | expr '.' ID
-    | expr '.' expr
     | expr '++'
     | expr '--'
     | '!' expr
@@ -160,5 +185,12 @@ expr returns [Expression e]
     | expr '?' expr ':' expr
     | ID
     | INT_LIT
+    | s=STR_LIT {
+        String text = $s.text;
+        $e = new StringExpression(text.substring(1, text.length() - 1));
+    }
+    | 'System.' i=ID '(' a=actualList ')' {
+        $e = new FunctionCall($i.text, true, $a.l);
+    }
     | ID '(' actualList ')'
     ;

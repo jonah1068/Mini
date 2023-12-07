@@ -34,8 +34,8 @@ public class CPU {
         processor.startLive();
     }
 
-    public int handleSystemFunction(SystemFunctions systemFunctions, int... args) {
-        return systemFunctionHandler.handle(systemFunctions, args);
+    public int handleSystemFunction(SystemFunction systemFunction, int... args) {
+        return systemFunctionHandler.handle(systemFunction, args);
     }
 
     public static void main(String[] args) {
