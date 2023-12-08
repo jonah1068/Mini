@@ -15,4 +15,9 @@ public class DotAccessExpression extends Expression {
         }
     }
 
+    @Override
+    public String prettyPrint(int tabs) {
+        return e1.prettyPrint(tabs) + "." + e2.prettyPrint(tabs);
+    }
+
 }

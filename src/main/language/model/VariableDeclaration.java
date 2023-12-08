@@ -15,4 +15,9 @@ public class VariableDeclaration implements Statement {
     public void execute(CPU cpu) {
         // Do nothing, handled at compile time
     }
+
+    @Override
+    public String prettyPrint(int tabs) {
+        return type.prettyPrint() + " " + id;
+    }
 }

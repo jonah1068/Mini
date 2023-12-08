@@ -15,4 +15,9 @@ public class IfStatement implements Statement {
     public void execute(CPU cpu) {
 
     }
+
+    @Override
+    public String prettyPrint(int tabs) {
+        return null;
+    }
 }

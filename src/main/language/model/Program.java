@@ -27,4 +27,12 @@ public class Program {
         f.execute(cpu);
     }
 
+    public String prettyPrint() {
+        String s = "";
+        for (ProgramStatement stmt : program) {
+            s += stmt.prettyPrint(0) + "\n";
+        }
+        return s;
+    }
+
 }

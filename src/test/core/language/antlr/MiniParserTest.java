@@ -13,7 +13,7 @@ import java.util.Arrays;
 
 public class MiniParserTest {
 
-    public static String program = "Integer main() { System.out(\"Hello, World! \"); }";
+    public static String program = "Integer main() { System.out(\"Hello, World!\"); }";
     public static boolean muteOutput = false;
 
     @Test
@@ -29,7 +29,7 @@ public class MiniParserTest {
         try {
             Program program = p.program().p;
             program.execute(new CPU());
-            System.out.println();
+            System.out.println(program.prettyPrint());
         } catch (Exception e) {
             System.out.println(e.getClass());
             e.printStackTrace(System.err);

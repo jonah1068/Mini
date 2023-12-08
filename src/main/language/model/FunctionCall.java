@@ -25,6 +25,19 @@ public class FunctionCall extends Expression {
         }
     }
 
+    @Override
+    public String prettyPrint(int tabs) {
+        String s = isSystemFunctionCall ? "System." : "";
+        s += functionName + "(";
+        for (Expression e : actualList) {
+            s += e.prettyPrint(tabs) + ", ";
+        }
+        if (!actualList.isEmpty()) {
+            s = s.substring(0, s.length() - 2);
+        }
+        return s + ")";
+    }
+
     public void executeSystemFunction(CPU cpu) {
         for (int i = actualList.size() - 1; i >= 0; i--) {
             actualList.get(i).execute(cpu);

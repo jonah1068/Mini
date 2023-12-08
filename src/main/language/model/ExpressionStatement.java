@@ -14,4 +14,10 @@ public class ExpressionStatement implements Statement{
         cpu.handleSystemFunction(SystemFunction.POP);
     }
 
+    @Override
+    public String prettyPrint(int tabs) {
+        String s = new String(new char[tabs]).replace("\0", "\t");
+        return s + e.prettyPrint(tabs) + ";";
+    }
+
 }

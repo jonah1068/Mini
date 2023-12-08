@@ -95,7 +95,9 @@ varInitStmt returns [VariableInitializationStatement v]
     : varDecl '=' expr ';';
 
 type returns [Type t]
-    : primitiveType
+    : p=primitiveType {
+        $t = $p.t;
+    }
     | genericType
     | frameType
     | type '[' ']' // arrayType
@@ -108,8 +110,10 @@ frameDecl
     : frameType '{' ( varDecl ';')+ '}'
     ;
 
-primitiveType
-    : INTEGER
+primitiveType returns [Type t]
+    : s=INTEGER {
+        $t = new PrimitiveType($s.text);
+    }
     | DECIMAL
     | CHARACTER
     | STRING
@@ -189,8 +193,10 @@ expr returns [Expression e]
         String text = $s.text;
         $e = new StringExpression(text.substring(1, text.length() - 1));
     }
-    | 'System.' i=ID '(' a=actualList ')' {
+    | SYSTEM i=ID '(' a=actualList ')' {
         $e = new FunctionCall($i.text, true, $a.l);
     }
-    | ID '(' actualList ')'
+    | i=ID '(' a=actualList ')' {
+        $e = new FunctionCall($i.text, false, $a.l);
+    }
     ;

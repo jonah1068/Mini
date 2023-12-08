@@ -6,4 +6,6 @@ public interface Node {
 
     void execute(CPU cpu);
 
+    String prettyPrint(int tabs);
+
 }

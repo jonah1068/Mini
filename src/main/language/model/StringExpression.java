@@ -26,4 +26,9 @@ public class StringExpression extends Expression {
         cpu.handleSystemFunction(SystemFunction.PUSH, addr);
     }
 
+    @Override
+    public String prettyPrint(int tabs) {
+        return '"' + value + '"';
+    }
+
 }
