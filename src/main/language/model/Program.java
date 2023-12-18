@@ -40,7 +40,7 @@ public class Program implements Serializable {
                 .orElseThrow(() -> new RuntimeException("Function " + name + " not found."));
 
         cpu.pushStackFrame();
-        final int returnValue =  f.executeFunction(cpu);
+        final int returnValue = f.executeFunction(cpu);
         cpu.popStackFrame();
 
         return returnValue;

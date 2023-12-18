@@ -60,7 +60,8 @@ public class CPU {
         }
         if (args[0].equals("-debug")) {
 
-        } else if (args[0].equals("-execute")) {
+        }
+        else if (args[0].equals("-execute")) {
 
         }
 

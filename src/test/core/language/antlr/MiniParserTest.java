@@ -20,13 +20,13 @@ public class MiniParserTest {
                 a();
                 return 0;
             }
-            
+                        
             Integer a(Integer i) {
                 System.out("a\\n");
                 b();
                 return 0;
             }
-            
+                        
             Integer b() {
                 System.out("b\\n");
                 return 0;

@@ -22,7 +22,8 @@ public class FunctionCall extends Expression {
     public void execute(CPU cpu) {
         if (isSystemFunctionCall) {
             executeSystemFunction(cpu);
-        } else {
+        }
+        else {
             int returnValue = cpu.executeProgram(functionName);
             cpu.handleSystemFunction(SystemFunction.PUSH, returnValue);
         }
