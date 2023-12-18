@@ -16,8 +16,7 @@ public class MemoryStack {
     public MemoryStack(int size) {
         stack = new Stack<>();
         capacity = size;
-        stack.add(new LinkedList<>());
-        stackIndex = 0;
+        stackIndex = -1;
     }
 
     public MemoryBlock getBasePlus(int offset) {
@@ -35,7 +34,8 @@ public class MemoryStack {
         if (offset >= 0) {
             // Local variable
             stack.get(stackIndex).set(offset, new MemoryBlock(i));
-        } else {
+        }
+        else {
             // Parameter
             LinkedList<MemoryBlock> frame = stack.get(stackIndex - 1);
             frame.get(frame.size() + offset).setValue(i);

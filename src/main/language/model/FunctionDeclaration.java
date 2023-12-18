@@ -1,10 +1,13 @@
 package language.model;
 
 import core.system.CPU;
+import core.system.SystemFunction;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.List;
+
+import static language.model.Statement.printTabs;
 
 @AllArgsConstructor
 @Getter
@@ -16,13 +19,17 @@ public class FunctionDeclaration implements ProgramStatement {
 
     @Override
     public void execute(CPU cpu) {
+        throw new IllegalStateException("Should not reach");
+    }
+
+    public int executeFunction(CPU cpu) {
         statements.forEach(statement -> statement.execute(cpu));
+        return cpu.handleSystemFunction(SystemFunction.POP);
     }
 
     @Override
     public String prettyPrint(int tabs) {
-        String t = new String(new char[tabs]).replace("\0", "\t");
-        String s = t + returnType.prettyPrint() + " " + identifier + "(";
+        String s = printTabs(tabs) + returnType.prettyPrint() + " " + identifier + "(";
         for (VariableDeclaration v : parameterList) {
             s += v.prettyPrint(tabs) + ", ";
         }
@@ -33,6 +40,6 @@ public class FunctionDeclaration implements ProgramStatement {
         for (Statement stmt : statements) {
             s += stmt.prettyPrint(tabs + 1) + "\n";
         }
-        return s + "}\n\n";
+        return s + "}\n";
     }
 }

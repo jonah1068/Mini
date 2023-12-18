@@ -46,13 +46,12 @@ public class SystemFunctionHandler {
     }
 
     public int handleOut(int i) {
-        System.out.print(">>> ");
         char c;
         StringBuilder s = new StringBuilder();
         while ((c = (char) cpu.heap.get(i++).getValue()) != '\0') {
             s.append(c);
         }
-        System.out.println(s);
+        System.out.print(s);
         return 0;
     }
 

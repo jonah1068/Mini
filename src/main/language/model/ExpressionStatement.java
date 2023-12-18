@@ -5,7 +5,7 @@ import core.system.SystemFunction;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class ExpressionStatement implements Statement{
+public class ExpressionStatement implements Statement {
 
     private Expression e;
 
@@ -16,8 +16,7 @@ public class ExpressionStatement implements Statement{
 
     @Override
     public String prettyPrint(int tabs) {
-        String s = new String(new char[tabs]).replace("\0", "\t");
-        return s + e.prettyPrint(tabs) + ";";
+        return Statement.printTabs(tabs) + e.prettyPrint(tabs) + ";";
     }
 
 }

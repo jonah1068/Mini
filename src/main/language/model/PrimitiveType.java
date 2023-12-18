@@ -1,5 +1,6 @@
 package language.model;
 
+import core.system.CPU;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -8,9 +9,19 @@ import java.util.Map;
 
 public class PrimitiveType implements Type {
 
+    @Override
+    public void execute(CPU cpu) {
+
+    }
+
+    @Override
+    public String prettyPrint(int tabs) {
+        return type.getType() + " ";
+    }
+
     @AllArgsConstructor
     @Getter
-    enum Type {
+    public enum Type {
         INTEGER("Integer"),
         DECIMAL("Decimal"),
         CHARACTER("Character"),
@@ -18,7 +29,7 @@ public class PrimitiveType implements Type {
         ANY("Any");
 
         private String type;
-    };
+    }
 
     private static final Map<String, Type> types;
 

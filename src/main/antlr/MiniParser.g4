@@ -12,7 +12,6 @@ options { tokenVocab=MiniLexer; }
 }
 
 @members {
-    public Program program;
 }
 
 program returns [Program p]
@@ -77,9 +76,8 @@ varDeclList returns [ArrayList<VariableDeclaration> l]
         $l.add($v1.v);
     }
     | v2=varDecl {
-        $l = new ArrayList<VariableDeclaration>() {{
-            add($v2.v);
-        }};
+        $l = new ArrayList<VariableDeclaration>();
+        $l.add($v2.v);
     }
     | { /* nothing */
         $l = new ArrayList<VariableDeclaration>();
@@ -152,8 +150,10 @@ stmt returns [Statement s]
     }
     | assignStmt
     | frameDecl ';'
-    | RETURN ';'
-    | RETURN expr ';'
+//    | RETURN ';' // TODO: cannot return void?
+    | RETURN e=expr ';' {
+        $s = new ReturnStatement($e.e);
+    }
     | e=expr ';' {
         $s = new ExpressionStatement($e.e);
     }
@@ -188,10 +188,13 @@ expr returns [Expression e]
     | expr '||' expr
     | expr '?' expr ':' expr
     | ID
-    | INT_LIT
+    | i=INT_LIT {
+        String text = $i.text;
+        $e = new LiteralExpression(PrimitiveType.Type.INTEGER, text);
+    }
     | s=STR_LIT {
         String text = $s.text;
-        $e = new StringExpression(text.substring(1, text.length() - 1));
+        $e = new LiteralExpression(PrimitiveType.Type.STRING, text.substring(1, text.length() - 1));
     }
     | SYSTEM i=ID '(' a=actualList ')' {
         $e = new FunctionCall($i.text, true, $a.l);

@@ -44,7 +44,8 @@ public class Heap {
             if (inFree && !free[i]) {
                 // Transition from in free zone to not free zone
                 inFree = false;
-            } else if (free[i]) {
+            }
+            else if (free[i]) {
                 if (!inFree) {
                     // Transition from not free zone to in free zone
                     inFree = true;
@@ -87,6 +88,7 @@ public class Heap {
         for (int k = 1; k <= blockList.size(); k++) {
             if (k == blockList.size() || b.end < blockList.get(k).start) {
                 blockList.add(k, b);
+                return;
             }
         }
     }
@@ -114,15 +116,12 @@ public class Heap {
 
     public void put(int index, MemoryBlock m) {
         if (index < 0 || index > heap.length) {
-            throw new IndexOutOfBoundsException("get() index out of bounds");
+            throw new IndexOutOfBoundsException("put() index out of bounds");
         }
+
         for (Block b : blockList) {
             if (b.in(index)) {
                 heap[index] = m;
-                return;
-            }
-
-            if (index > b.end) {
                 return;
             }
         }

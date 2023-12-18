@@ -2,7 +2,9 @@ package language.model;
 
 import core.system.CPU;
 
-public interface Node {
+import java.io.Serializable;
+
+public interface Node extends Serializable {
 
     void execute(CPU cpu);
 

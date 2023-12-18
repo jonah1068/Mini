@@ -47,7 +47,7 @@ lexer grammar MiniLexer;
     SYSTEM: 'System.';
 
     INT_LIT : [0-9]+ ;
-    STR_LIT: '"' .*? ~'\\' '"';
+    STR_LIT: '"' (~('"' | '\\'))* ('\\' . (~('"' | '\\')*))* '"';
     ID: [a-z][a-zA-Z_0-9]*;
     WS: [ \t\n\r\f]+ -> channel(HIDDEN) ;
     BLOCK_COMMENT: '/*' .*? '*/'  -> skip;

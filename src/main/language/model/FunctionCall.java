@@ -22,6 +22,9 @@ public class FunctionCall extends Expression {
     public void execute(CPU cpu) {
         if (isSystemFunctionCall) {
             executeSystemFunction(cpu);
+        } else {
+            int returnValue = cpu.executeProgram(functionName);
+            cpu.handleSystemFunction(SystemFunction.PUSH, returnValue);
         }
     }
 
@@ -39,14 +42,21 @@ public class FunctionCall extends Expression {
     }
 
     public void executeSystemFunction(CPU cpu) {
+        // Push actual expression values onto stack
         for (int i = actualList.size() - 1; i >= 0; i--) {
             actualList.get(i).execute(cpu);
         }
+
+        // Collect actual values from stack
         int[] actuals = new int[actualList.size()];
         for (int i = 0; i < actuals.length; i++) {
             actuals[i] = cpu.handleSystemFunction(SystemFunction.POP);
         }
+
+        // Call System function
         int returnValue = cpu.handleSystemFunction(SystemFunction.getSystemFunction(functionName), actuals);
+
+        // Push return value onto stack
         cpu.handleSystemFunction(SystemFunction.PUSH, returnValue);
     }
 

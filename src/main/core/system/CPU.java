@@ -1,23 +1,22 @@
 package core.system;
 
 import core.memory.Heap;
-import core.memory.Instructions;
 import core.memory.MemoryStack;
 import core.processor.Processor;
 import core.processor.Processor1_0;
+import language.model.Program;
 
 public class CPU {
 
     final MemoryStack stack;
     final Heap heap;
-    final Instructions instructions;
     final Processor processor;
     final SystemFunctionHandler systemFunctionHandler;
+    Program program;
 
     public CPU() {
         stack = new MemoryStack();
         heap = new Heap();
-        instructions = new Instructions();
         processor = new Processor1_0(this);
         systemFunctionHandler = new SystemFunctionHandler(this);
     }
@@ -25,9 +24,24 @@ public class CPU {
     public CPU(int size) {
         stack = new MemoryStack(size);
         heap = new Heap(size);
-        instructions = new Instructions(size);
         processor = new Processor1_0(this);
         systemFunctionHandler = new SystemFunctionHandler(this);
+    }
+
+    public void setProgram(Program program) {
+        this.program = program;
+    }
+
+    public int executeProgram(String name) {
+        return program.execute(this, name);
+    }
+
+    public void pushStackFrame() {
+        stack.pushFrame();
+    }
+
+    public void popStackFrame() {
+        stack.popFrame();
     }
 
     public void startLive() {
